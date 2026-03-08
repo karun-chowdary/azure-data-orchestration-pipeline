@@ -1,0 +1,9 @@
+{
+	"name": "covid-cases-ADF-karun",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "00d19b76-1d74-4d0a-825c-8a149cc1488d",
+		"tenantId": "ebd4991a-e6f3-4af6-a865-54ac1f43b520"
+	}
+}

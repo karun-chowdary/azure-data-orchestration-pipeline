@@ -1,0 +1,27 @@
+{
+	"name": "ds_population_raw_gz",
+	"properties": {
+		"description": "Raw/Bronze layer dataset pointing to the population-by-age data. Configured for GZIP compression and Tab (\\t) delimiters. Serves as the source dataset for the initial ingestion pipeline.",
+		"linkedServiceName": {
+			"referenceName": "ls_ablob_covid19reportingkarunsa",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "population_by_age.tsv.gz",
+				"container": "population"
+			},
+			"columnDelimiter": "\t",
+			"compressionCodec": "gzip",
+			"compressionLevel": "Optimal",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

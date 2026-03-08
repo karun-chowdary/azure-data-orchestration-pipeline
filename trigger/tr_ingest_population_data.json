@@ -1,0 +1,25 @@
+{
+	"name": "tr_ingest_population_data",
+	"properties": {
+		"description": "Scheduled automation trigger for the COVID-19 population ingestion pipeline. Configured to execute batch runs at a 15-minute cadence, ensuring near-real-time data availability in the Bronze layer.",
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pl_ingest_population_data",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/population/blobs/population_by_age.tsv.gz",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/4ffdcf64-070a-4460-b254-16840f50f120/resourceGroups/covid-19_cases_reporting_RG/providers/Microsoft.Storage/storageAccounts/covid19reportingkarunsa",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

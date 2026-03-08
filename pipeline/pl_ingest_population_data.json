@@ -1,0 +1,193 @@
+{
+	"name": "pl_ingest_population_data",
+	"properties": {
+		"description": "Core ingestion pipeline for the COVID-19 project. Orchestrates the extraction of compressed population demographic data and lands it as an uncompressed TSV in the Bronze/Raw layer of the Data Lake for downstream processing.",
+		"activities": [
+			{
+				"name": "check if file exsits",
+				"description": "Pre-execution validation check. Verifies the presence of the source population data file before initiating the extraction. Ensures the pipeline fails fast and avoids unnecessary compute if the source data is missing or delayed.",
+				"type": "Validation",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_population_raw_gz",
+						"type": "DatasetReference"
+					},
+					"timeout": "0.00:02:00",
+					"sleep": 10,
+					"minimumSize": 1024
+				}
+			},
+			{
+				"name": "Get File Metadata",
+				"description": "Retrieves structural metadata (specifically the column count) from the validated source file. This enables dynamic data quality checks to detect schema drift before ingestion begins.",
+				"type": "GetMetadata",
+				"dependsOn": [
+					{
+						"activity": "check if file exsits",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"dataset": {
+						"referenceName": "ds_population_raw_gz",
+						"type": "DatasetReference"
+					},
+					"fieldList": [
+						"columnCount",
+						"exists",
+						"size"
+					],
+					"storeSettings": {
+						"type": "AzureBlobStorageReadSettings",
+						"recursive": true,
+						"enablePartitionDiscovery": false
+					},
+					"formatSettings": {
+						"type": "DelimitedTextReadSettings"
+					}
+				}
+			},
+			{
+				"name": "if column count matches",
+				"description": "Data quality gateway. Evaluates the retrieved column count against the expected schema definition (e.g., 13 columns). Routes valid files to the Copy activity and prevents pipeline corruption from malformed source data.",
+				"type": "IfCondition",
+				"dependsOn": [
+					{
+						"activity": "Get File Metadata",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@equals(activity('Get File Metadata').output.columnCount,13)",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Fail_schema_mismatch",
+							"description": "Terminates pipeline execution due to a detected schema drift. The source file's column count does not match the expected baseline. Halting ingestion prevents malformed data from corrupting the Bronze layer.",
+							"type": "Fail",
+							"dependsOn": [],
+							"userProperties": [],
+							"typeProperties": {
+								"message": "Schema Validation Failed: The source COVID-19 population file has an unexpected column count. Ingestion halted to prevent downstream data corruption.",
+								"errorCode": "ERR_SCHEMA_MISMATCH_001"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Copy population data",
+							"description": "Executes the core data movement upon successful schema validation. Extracts the compressed COVID-19 population dataset, decompresses it on the fly, and writes it as a structured TSV into the Bronze/Raw data lake zone.",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0:10:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "DelimitedTextSource",
+									"storeSettings": {
+										"type": "AzureBlobStorageReadSettings",
+										"recursive": true,
+										"enablePartitionDiscovery": false
+									},
+									"formatSettings": {
+										"type": "DelimitedTextReadSettings"
+									}
+								},
+								"sink": {
+									"type": "DelimitedTextSink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									},
+									"formatSettings": {
+										"type": "DelimitedTextWriteSettings",
+										"quoteAllText": true,
+										"fileExtension": ".txt"
+									}
+								},
+								"enableStaging": false,
+								"translator": {
+									"type": "TabularTranslator",
+									"typeConversion": true,
+									"typeConversionSettings": {
+										"allowDataTruncation": true,
+										"treatBooleanAsNumber": false
+									}
+								}
+							},
+							"inputs": [
+								{
+									"referenceName": "ds_population_raw_gz",
+									"type": "DatasetReference"
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "ds_population_raw_tsv",
+									"type": "DatasetReference"
+								}
+							]
+						},
+						{
+							"name": "Delete source file",
+							"type": "Delete",
+							"dependsOn": [
+								{
+									"activity": "Copy population data",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"dataset": {
+									"referenceName": "ds_population_raw_gz",
+									"type": "DatasetReference"
+								},
+								"enableLogging": false,
+								"storeSettings": {
+									"type": "AzureBlobStorageReadSettings",
+									"recursive": true,
+									"enablePartitionDiscovery": false
+								}
+							}
+						}
+					]
+				}
+			}
+		],
+		"annotations": [],
+		"lastPublishTime": "2026-03-08T18:18:03Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}
