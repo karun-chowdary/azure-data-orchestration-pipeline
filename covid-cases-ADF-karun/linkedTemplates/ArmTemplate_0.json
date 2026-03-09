@@ -545,8 +545,9 @@
 					"recurrence": {
 						"frequency": "Day",
 						"interval": 1,
-						"startTime": "2026-03-09T17:06:00",
-						"timeZone": "India Standard Time"
+						"startTime": "2026-03-09T17:10:00",
+						"timeZone": "India Standard Time",
+						"schedule": {}
 					}
 				}
 			},
