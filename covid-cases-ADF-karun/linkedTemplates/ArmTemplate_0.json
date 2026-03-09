@@ -661,10 +661,11 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Minute",
-						"interval": 15,
-						"startTime": "2026-03-10T01:35:00",
-						"timeZone": "India Standard Time"
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2026-03-10T01:41:00",
+						"timeZone": "India Standard Time",
+						"schedule": {}
 					}
 				}
 			},
