@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "covid-cases-ADF-karun"
+		},
+		"ls_ablob_covid19reportingkarunsa_connectionString": {
+			"value": ""
+		},
+		"ls_adls_covid19reportingkarundl_accountKey": {
+			"value": ""
+		},
+		"ls_adls_covid19reportingkarundl_properties_typeProperties_url": {
+			"value": "https://covid19reportingkarundl.dfs.core.windows.net/"
+		},
+		"ls_http_opendata_ecdc_europa_eu_properties_typeProperties_url": {
+			"value": "https://github.com"
+		},
+		"tr_ingest_population_data_properties_typeProperties_scope": {
+			"value": "/subscriptions/4ffdcf64-070a-4460-b254-16840f50f120/resourceGroups/covid-19_cases_reporting_RG/providers/Microsoft.Storage/storageAccounts/covid19reportingkarunsa"
+		}
+	}
+}
