@@ -1,10 +1,10 @@
 {
-	"name": "pl_ingest_cases_deaths_data",
+	"name": "pl_ingest_ecdc_data",
 	"properties": {
 		"description": "Core ingestion pipeline responsible for extracting the raw COVID-19 cases and deaths dataset from the external HTTP endpoint. Lands the uncompressed CSV data securely into the Bronze/Raw layer of the Azure Data Lake for downstream processing.",
 		"activities": [
 			{
-				"name": "Copy cases and deaths data",
+				"name": "Copy ecdc data",
 				"description": "Executes the physical data transfer of the cases and deaths dataset. Connects to the HTTP source dataset, retrieves the CSV file, and writes it directly to the target Data Lake sink without applying any in-flight transformations.",
 				"type": "Copy",
 				"dependsOn": [],
@@ -50,18 +50,38 @@
 				},
 				"inputs": [
 					{
-						"referenceName": "ds_cases_deaths_raw_csv_http",
-						"type": "DatasetReference"
+						"referenceName": "ds_ecdc_raw_csv_http",
+						"type": "DatasetReference",
+						"parameters": {
+							"relativeURL": {
+								"value": "@pipeline().parameters.sourceRelativeURL",
+								"type": "Expression"
+							}
+						}
 					}
 				],
 				"outputs": [
 					{
-						"referenceName": "ds_cases_death_raw_csv_dl",
-						"type": "DatasetReference"
+						"referenceName": "ds_ecdc_raw_csv_dl",
+						"type": "DatasetReference",
+						"parameters": {
+							"fileName": {
+								"value": "@pipeline().parameters.sinkFileName",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
 		],
+		"parameters": {
+			"sourceRelativeURL": {
+				"type": "string"
+			},
+			"sinkFileName": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
