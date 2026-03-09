@@ -1,0 +1,67 @@
+{
+	"name": "pl_ingest_cases_deaths_data",
+	"properties": {
+		"description": "Core ingestion pipeline responsible for extracting the raw COVID-19 cases and deaths dataset from the external HTTP endpoint. Lands the uncompressed CSV data securely into the Bronze/Raw layer of the Azure Data Lake for downstream processing.",
+		"activities": [
+			{
+				"name": "Copy cases and deaths data",
+				"description": "Executes the physical data transfer of the cases and deaths dataset. Connects to the HTTP source dataset, retrieves the CSV file, and writes it directly to the target Data Lake sink without applying any in-flight transformations.",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "ds_cases_deaths_raw_csv_http",
+						"type": "DatasetReference"
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "ds_cases_death_raw_csv_dl",
+						"type": "DatasetReference"
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
