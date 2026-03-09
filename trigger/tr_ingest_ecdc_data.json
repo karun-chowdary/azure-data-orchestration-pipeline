@@ -2,7 +2,7 @@
 	"name": "tr_ingest_ecdc_data",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -16,7 +16,7 @@
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 15,
-				"startTime": "2026-03-10T01:56:00",
+				"startTime": "2026-03-10T01:58:00",
 				"timeZone": "India Standard Time"
 			}
 		}
