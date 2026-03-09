@@ -2,10 +2,15 @@
 	"name": "ls_http_opendata_ecdc_europa_eu",
 	"properties": {
 		"description": "HTTP linked service establishing a connection to the European Centre for Disease Prevention and Control (ECDC) Open Data portal. Serves as the primary external source connection for ingesting raw COVID-19 reporting files into the Azure environment.",
+		"parameters": {
+			"sourceBaseURL": {
+				"type": "string"
+			}
+		},
 		"annotations": [],
 		"type": "HttpServer",
 		"typeProperties": {
-			"url": "https://github.com",
+			"url": "@{linkedService().sourceBaseURL}",
 			"enableServerCertificateValidation": true,
 			"authenticationType": "Anonymous"
 		}
