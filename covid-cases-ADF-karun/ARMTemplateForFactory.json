@@ -21,7 +21,7 @@
 		},
 		"ls_http_opendata_ecdc_europa_eu_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://github.com"
+			"defaultValue": "@{linkedService().sourceBaseURL}"
 		},
 		"tr_ingest_hospital_admission_data_properties_pl_ingest_ecdc_data_parameters_sourceRelativeURL": {
 			"type": "string",
@@ -100,6 +100,10 @@
 									"relativeURL": {
 										"value": "@pipeline().parameters.sourceRelativeURL",
 										"type": "Expression"
+									},
+									"baseURL": {
+										"value": "@pipeline().parameters.sourceBaseURL",
+										"type": "Expression"
 									}
 								}
 							}
@@ -126,6 +130,9 @@
 						"type": "string"
 					},
 					"sinkFileName": {
+						"type": "string"
+					},
+					"sourceBaseURL": {
 						"type": "string"
 					}
 				},
@@ -420,10 +427,19 @@
 			"properties": {
 				"linkedServiceName": {
 					"referenceName": "ls_http_opendata_ecdc_europa_eu",
-					"type": "LinkedServiceReference"
+					"type": "LinkedServiceReference",
+					"parameters": {
+						"sourceBaseURL": {
+							"value": "@dataset().baseURL",
+							"type": "Expression"
+						}
+					}
 				},
 				"parameters": {
 					"relativeURL": {
+						"type": "string"
+					},
+					"baseURL": {
 						"type": "string"
 					}
 				},
@@ -545,6 +561,11 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"description": "HTTP linked service establishing a connection to the European Centre for Disease Prevention and Control (ECDC) Open Data portal. Serves as the primary external source connection for ingesting raw COVID-19 reporting files into the Azure environment.",
+				"parameters": {
+					"sourceBaseURL": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "HttpServer",
 				"typeProperties": {
