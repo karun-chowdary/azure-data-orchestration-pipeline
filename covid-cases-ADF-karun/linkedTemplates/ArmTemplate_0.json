@@ -648,7 +648,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -661,10 +661,11 @@
 				"type": "ScheduleTrigger",
 				"typeProperties": {
 					"recurrence": {
-						"frequency": "Minute",
-						"interval": 15,
-						"startTime": "2026-03-10T01:56:00",
-						"timeZone": "India Standard Time"
+						"frequency": "Day",
+						"interval": 1,
+						"startTime": "2026-03-10T02:00:00",
+						"timeZone": "India Standard Time",
+						"schedule": {}
 					}
 				}
 			},
