@@ -1,7 +1,7 @@
 {
 	"name": "tr_ingest_ecdc_data",
 	"properties": {
-		"description": "using trigger to copy all files in the list.",
+		"description": "triggering to process all the files in list.",
 		"annotations": [],
 		"runtimeState": "Started",
 		"pipelines": [
@@ -17,7 +17,7 @@
 			"recurrence": {
 				"frequency": "Day",
 				"interval": 1,
-				"startTime": "2026-03-09T07:30:00",
+				"startTime": "2026-03-09T07:40:00",
 				"timeZone": "India Standard Time"
 			}
 		}
