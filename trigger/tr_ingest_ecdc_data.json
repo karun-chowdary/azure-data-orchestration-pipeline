@@ -1,6 +1,7 @@
 {
 	"name": "tr_ingest_ecdc_data",
 	"properties": {
+		"description": "  ",
 		"annotations": [],
 		"runtimeState": "Started",
 		"pipelines": [
