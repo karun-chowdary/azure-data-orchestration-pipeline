@@ -1,7 +1,7 @@
 {
 	"name": "tr_ingest_ecdc_data",
 	"properties": {
-		"description": "  ",
+		"description": "using trigger to copy all files in the list.",
 		"annotations": [],
 		"runtimeState": "Started",
 		"pipelines": [
