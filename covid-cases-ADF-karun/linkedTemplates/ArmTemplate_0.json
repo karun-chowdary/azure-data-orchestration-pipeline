@@ -869,11 +869,13 @@
 						"     skipDuplicateMapOutputs: true) ~> selectForSink",
 						"selectForSink sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
+						"     partitionFileNames:['cases_and_deaths'],",
 						"     umask: 0022,",
 						"     preCommands: [],",
 						"     postCommands: [],",
 						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> casesAndDeathsSink"
+						"     skipDuplicateMapOutputs: true,",
+						"     partitionBy('hash', 1)) ~> casesAndDeathsSink"
 					]
 				}
 			},
