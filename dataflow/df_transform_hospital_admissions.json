@@ -1,0 +1,60 @@
+{
+	"name": "df_transform_hospital_admissions",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "ds_hospital_admissions_csv_dl",
+						"type": "DatasetReference"
+					},
+					"name": "SourceHospitalAdmissions"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "SelectOnlyRequiredFields"
+				},
+				{
+					"name": "pivotcounts"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          country as string,",
+				"          indicator as string,",
+				"          date as date,",
+				"          year_week as string,",
+				"          value as double,",
+				"          source as string,",
+				"          url as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> SourceHospitalAdmissions",
+				"SourceHospitalAdmissions select(mapColumn(",
+				"          country,",
+				"          indicator,",
+				"          year_week,",
+				"          value,",
+				"          source,",
+				"          each(match(name == 'date'),",
+				"               'reported'+'_date' = $$)",
+				"     ),",
+				"     skipDuplicateMapInputs: false,",
+				"     skipDuplicateMapOutputs: false) ~> SelectOnlyRequiredFields",
+				"SelectOnlyRequiredFields pivot(groupBy(country,",
+				"          year_week,",
+				"          value,",
+				"          reported_date,",
+				"          source),",
+				"     pivotBy(indicator, ['Daily hospital occupancy', 'Daily ICU occupancy', 'Weekly new hospital admissions per 100k', 'Weekly new ICU admissions per 100k']),",
+				"     count = sum(reported_date),",
+				"     columnNaming: '$V_$N',",
+				"     lateral: true) ~> pivotcounts"
+			]
+		}
+	}
+}
