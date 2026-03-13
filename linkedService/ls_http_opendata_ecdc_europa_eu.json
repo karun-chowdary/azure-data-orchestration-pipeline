@@ -1,5 +1,6 @@
 {
 	"name": "ls_http_opendata_ecdc_europa_eu",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
 	"properties": {
 		"description": "HTTP linked service establishing a connection to the European Centre for Disease Prevention and Control (ECDC) Open Data portal. Serves as the primary external source connection for ingesting raw COVID-19 reporting files into the Azure environment.",
 		"parameters": {
