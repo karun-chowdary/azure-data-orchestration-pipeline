@@ -115,8 +115,7 @@
 				"     preCommands: [],",
 				"     postCommands: [],",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true,",
-				"     partitionBy('hash', 1)) ~> casesAndDeathsSink"
+				"     skipDuplicateMapOutputs: true) ~> casesAndDeathsSink"
 			]
 		}
 	}
