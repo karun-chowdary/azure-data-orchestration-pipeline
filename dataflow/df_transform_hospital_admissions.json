@@ -6,7 +6,7 @@
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "ds_hospital_admissions_csv_dl",
+						"referenceName": "ds_raw_hospital_admissions",
 						"type": "DatasetReference"
 					},
 					"name": "SourceHospitalAdmissions"
