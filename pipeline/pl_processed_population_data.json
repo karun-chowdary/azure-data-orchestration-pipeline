@@ -1,0 +1,28 @@
+{
+	"name": "pl_processed_population_data",
+	"properties": {
+		"activities": [
+			{
+				"name": "Execute Population data",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/Covid/trans/transform_population_data"
+				},
+				"linkedServiceName": {
+					"referenceName": "ls_db_covid_cluster",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
