@@ -11,6 +11,9 @@
 		"ls_adls_covid19reportingkarundl_accountKey": {
 			"value": ""
 		},
+		"ls_db_covid_cluster_accessToken": {
+			"value": ""
+		},
 		"ls_adls_covid19reportingkarundl_properties_typeProperties_url": {
 			"value": "https://covid19reportingkarundl.dfs.core.windows.net/"
 		},
