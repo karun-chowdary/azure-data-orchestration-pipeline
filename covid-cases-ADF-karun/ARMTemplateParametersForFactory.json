@@ -14,11 +14,23 @@
 		"ls_db_covid_cluster_accessToken": {
 			"value": ""
 		},
+		"ls_sql_covid_db_password": {
+			"value": ""
+		},
 		"ls_adls_covid19reportingkarundl_properties_typeProperties_url": {
 			"value": "https://covid19reportingkarundl.dfs.core.windows.net/"
 		},
 		"ls_http_opendata_ecdc_europa_eu_properties_typeProperties_url": {
 			"value": "@{linkedService().sourceBaseURL}"
+		},
+		"ls_sql_covid_db_properties_typeProperties_server": {
+			"value": "karun-server.database.windows.net"
+		},
+		"ls_sql_covid_db_properties_typeProperties_database": {
+			"value": "covid-db"
+		},
+		"ls_sql_covid_db_properties_typeProperties_userName": {
+			"value": "admkarun"
 		},
 		"tr_ingest_population_data_properties_typeProperties_scope": {
 			"value": "/subscriptions/4ffdcf64-070a-4460-b254-16840f50f120/resourceGroups/covid-19_cases_reporting_RG/providers/Microsoft.Storage/storageAccounts/covid19reportingkarunsa"
