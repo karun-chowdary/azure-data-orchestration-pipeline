@@ -5,6 +5,9 @@
 			"referenceName": "ls_ablob_covid19reportingkarunsa",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "look up"
+		},
 		"annotations": [],
 		"type": "Json",
 		"typeProperties": {

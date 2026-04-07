@@ -5,6 +5,9 @@
 			"referenceName": "ls_adls_covid19reportingkarundl",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "process"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

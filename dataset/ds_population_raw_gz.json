@@ -6,6 +6,9 @@
 			"referenceName": "ls_ablob_covid19reportingkarunsa",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "raw"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
