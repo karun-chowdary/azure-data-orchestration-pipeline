@@ -1,23 +1,9 @@
 {
 	"name": "tr_population_data_arrived",
 	"properties": {
-		"description": "Scheduled automation trigger for the COVID-19 population ingestion pipeline. Configured to execute batch runs at a 15-minute cadence, ensuring near-real-time data availability in the Bronze layer.",
 		"annotations": [],
-		"runtimeState": "Started",
-		"pipelines": [
-			{
-				"pipelineReference": {
-					"referenceName": "pl_ingest_population_data",
-					"type": "PipelineReference"
-				}
-			},
-			{
-				"pipelineReference": {
-					"referenceName": "pl_execute_population_pipeline",
-					"type": "PipelineReference"
-				}
-			}
-		],
+		"runtimeState": "Stopped",
+		"pipelines": [],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
 			"blobPathBeginsWith": "/population/blobs/population_by_age.tsv.gz",
