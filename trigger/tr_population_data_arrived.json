@@ -13,7 +13,7 @@
 		],
 		"type": "BlobEventsTrigger",
 		"typeProperties": {
-			"blobPathBeginsWith": "/population/blobs/population_by_age.tsv.gz",
+			"blobPathBeginsWith": "/population/blobs/population_by_age",
 			"ignoreEmptyBlobs": true,
 			"scope": "/subscriptions/4ffdcf64-070a-4460-b254-16840f50f120/resourceGroups/covid-19_cases_reporting_RG/providers/Microsoft.Storage/storageAccounts/covid19reportingkarunsa",
 			"events": [
