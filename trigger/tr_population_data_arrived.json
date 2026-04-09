@@ -1,5 +1,5 @@
 {
-	"name": "tr_ingest_population_data",
+	"name": "tr_population_data_arrived",
 	"properties": {
 		"description": "Scheduled automation trigger for the COVID-19 population ingestion pipeline. Configured to execute batch runs at a 15-minute cadence, ensuring near-real-time data availability in the Bronze layer.",
 		"annotations": [],
